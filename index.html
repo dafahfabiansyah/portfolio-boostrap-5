@@ -40,8 +40,8 @@
     <!-- Jumbotron -->
     <section class="jumbotron text-center">
       <img src="assets/img/Emoticon Thumbs up Teenage Wall Sticker - 48_W x 48_H.jpg" alt="dafah fabian syah" width="200" class="rounded-circle img-thumbnail" />
-      <h1 class="display-4">Dafah Fabian Syah</h1>
-      <p class="lead">Fresh Graduate | Junior Website Developer, maybe?</p>
+      <h1 class="display-4"><strong>Dafah Fabian Syah</strong></h1>
+      <p class="lead"><strong>Fresh Graduate | Junior Website Developer, maybe?</strong></p>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
         <path
           fill="#ffffff"
@@ -86,7 +86,7 @@
         <div class="row">
           <div class="col-md-4 mb-3">
             <div class="card">
-              <img src="assets/img/dries-augustyns-WzKPT0IuUrU-unsplash.jpg" class="card-img-top" alt="projets 1" />
+              <img src="assets/img/dries-augustyns-WzKPT0IuUrU-unsplash.jpg" class="card-img-top" alt="projets 1" title="projects 1" />
               <div class="card-body">
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
               </div>
@@ -94,7 +94,7 @@
           </div>
           <div class="col-md-4 mb-3">
             <div class="card">
-              <img src="assets/img/jay-zhang-ZByWaPXD2fU-unsplash.jpg" class="card-img-top" alt="projets 2" />
+              <img src="assets/img/jay-zhang-ZByWaPXD2fU-unsplash.jpg" class="card-img-top" alt="projets 2" title="projects 2" />
               <div class="card-body">
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
               </div>
@@ -102,7 +102,7 @@
           </div>
           <div class="col-md-4 mb-3">
             <div class="card">
-              <img src="assets/img/sergi-kabrera-2xU7rYxsTiM-unsplash.jpg" class="card-img-top" alt="projets 1" />
+              <img src="assets/img/sergi-kabrera-2xU7rYxsTiM-unsplash.jpg" class="card-img-top" alt="projets 1" title="projects 3" />
               <div class="card-body">
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
               </div>
@@ -130,20 +130,29 @@
         </div>
         <div class="row justify-content-center mb-3">
           <div class="col-md-6">
-            <form>
+            <div class="alert alert-success alert-dismissible fade show d-none my-alert" role="alert">
+              <strong>Terima Kasih!</strong> Pesan Anda Sudah Diterima:).
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <form name="dafbians-contact-form">
               <div class="mb-3">
                 <label for="name" class="form-label">Nama Lengkap</label>
-                <input type="text" class="form-control" id="name" aria-describedby="name" />
+                <input type="text" class="form-control" id="name" aria-describedby="name" name="nama" />
               </div>
               <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" aria-describedby="email" />
+                <input type="email" class="form-control" id="email" aria-describedby="email" name="email" />
               </div>
               <div class="mb-3">
                 <label for="Pesan" class="form-label">Pesan</label>
-                <textarea class="form-control" id="pesan" rows="3"></textarea>
+                <textarea class="form-control" id="pesan" rows="3" name="pesan"></textarea>
               </div>
-              <button type="submit" class="btn btn-primary">Kirim</button>
+              <button type="submit" class="btn btn-primary btn-sender">Kirim</button>
+
+              <button class="btn btn-primary btn-loading d-none" type="button" disabled>
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Loading...
+              </button>
             </form>
           </div>
         </div>
@@ -163,7 +172,36 @@
       <p>Created with <i class="bi bi-suit-heart-fill text-danger"></i> by <a href="https://www.instagram.com/dafbians/?hl=id" class="text-white fw-bold">Dafah Fabian Syah</a></p>
     </footer>
     <!-- End Footer -->
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
+
+    <script>
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbydaN6cV-1xaSiLVpU1Js565qGHvltwD9FYCB_55wmid3vy4QT66nHAltgXgXuf1YGc/exec';
+      const form = document.forms['dafbians-contact-form'];
+      const btnSender = document.querySelector('.btn-sender');
+      const btnLoading = document.querySelector('.btn-loading');
+      const myAlert = document.querySelector('.my-alert');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        //ketika tombol submit diklik
+        //tampilkan tombol loading, hilangkan tombol kirim
+        btnLoading.classList.toggle('d-none');
+        btnSender.classList.toggle('d-none');
+        fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+          .then((response) => {
+            //tampilkan tombol kirim, hilangkan tombol loading
+            btnLoading.classList.toggle('d-none');
+            btnSender.classList.toggle('d-none');
+            //tampilkan allert
+            myAlert.classList.toggle('d-none');
+            //reset formnya
+            form.reset();
+            console.log('Success!', response);
+          })
+          .catch((error) => console.error('Error!', error.message));
+      });
+    </script>
   </body>
 </html>
